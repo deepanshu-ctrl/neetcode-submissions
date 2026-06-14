@@ -1,0 +1,13 @@
+class Solution {
+public:
+    int numRescueBoats(vector<int>& people, int limit) {
+        sort(people.begin(),people.end());
+        int ans=0,l=0,r=people.size()-1;
+        while(l<=r){
+            int remaining=limit-people[r--];
+            ans++;
+            if(l<=r && remaining>=people[l]) l++;
+        }
+        return ans;
+    }
+};

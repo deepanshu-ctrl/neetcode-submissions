@@ -1,0 +1,24 @@
+class Solution {
+public:
+    vector<bool> used;
+    int t;
+    bool solve(vector<int> &nums,int k,int cs,int s){
+        if(k==0) return true;
+        if(cs==t) return solve(nums,k-1,0,0);
+        for(int i=s;i<nums.size();i++){
+            if(used[i]||cs+nums[i]>t) continue;
+            used[i]=true;
+            if(solve(nums,k,cs+nums[i],i+1)) return true;
+            used[i]=false;
+        }
+        return false;
+    }
+    bool canPartitionKSubsets(vector<int>& nums, int k) {
+        int s=accumulate(nums.begin(),nums.end(),0);
+        if(s%k!=0) return false;
+        t=s/k;
+        sort(nums.rbegin(),nums.rend());
+        used.assign(nums.size(),false);
+        return solve(nums,k,0,0);
+    }
+};
